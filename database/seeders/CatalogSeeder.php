@@ -13,19 +13,31 @@ class CatalogSeeder extends Seeder
     public function run(): void
     {
         $items = [
+            // Базовые ресурсы
+            ['name' => 'Дерево', 'type' => 'resource', 'power' => 0, 'price' => 5],
+            ['name' => 'Камень', 'type' => 'resource', 'power' => 0, 'price' => 8],
+            ['name' => 'Железо', 'type' => 'resource', 'power' => 0, 'price' => 15],
 
-            ['name' => 'Дерево', 'type' => 'resource', 'power' => 0],
-            ['name' => 'Камень', 'type' => 'resource', 'power' => 0],
-            ['name' => 'Железо', 'type' => 'resource', 'power' => 0],
+            // Инструменты для добычи
+            ['name' => 'Каменная кирка', 'type' => 'tool', 'power' => 10, 'price' => 40],
+            ['name' => 'Железная кирка', 'type' => 'tool', 'power' => 25, 'price' => 100],
 
-            ['name' => 'Дубина', 'type' => 'weapon', 'power' => 15],
-            ['name' => 'Каменный нож', 'type' => 'weapon', 'power' => 25],
+            // Оружие
+            ['name' => 'Дубина', 'type' => 'weapon', 'power' => 15, 'price' => 30],
+            ['name' => 'Каменный нож', 'type' => 'weapon', 'power' => 25, 'price' => 60],
+            ['name' => 'Стальной меч', 'type' => 'weapon', 'power' => 55, 'price' => 160],
+            ['name' => 'Мифриловый клинок', 'type' => 'weapon', 'power' => 90, 'price' => 400],
         ];
+
         foreach ($items as $item) {
-            Catalog::firstOrCreate(
+            Catalog::updateOrCreate(
                 ['name' => $item['name']],
-                ['type' => $item['type'],
-                    'power' => $item['power']]);
+                [
+                    'type' => $item['type'],
+                    'power' => $item['power'],
+                    'price' => $item['price'],
+                ]
+            );
         }
     }
 }
