@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Model
 {
-    protected $fillable = ['name', 'coins', 'level','catalog_id'];
+    protected $fillable = ['name', 'coins', 'level'];
     public function items(): HasMany
     {
         return $this->hasMany(Item::class);

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Item extends Model
 {
-    protected $fillable = ['title', 'description', 'power', 'catalog_id'];
+    protected $fillable = ['user_id', 'catalog_id'];
 
     public function user(): BelongsTo
     {
@@ -23,5 +23,43 @@ class Item extends Model
     public function catalog(): BelongsTo
     {
         return $this->belongsTo(Catalog::class, 'catalog_id');
+    }
+
+    public function getTitleAttribute(): string
+    {
+        return $this->catalog?->name ?? 'Без названия';
+    }
+
+    public function getPowerAttribute(): int
+    {
+        return $this->catalog?->power ?? 0;
+    }
+
+    public function getDescriptionAttribute(): ?string
+    {
+        if (!$this->catalog) {
+            return null;
+        }
+        return match ($this->catalog->type) {
+            'weapon' => 'Боевое оружие',
+            'tool' => 'Инструмент для добычи',
+            default => 'Ресурс для крафта',
+        };
+    }
+
+    public function getTypeAttribute(): string
+    {
+        return $this->catalog?->type ?? 'resource';
+    }
+
+    public function getPriceAttribute(): int
+    {
+        return $this->catalog?->price ?? 10;
+    }
+
+    public function getSellPriceAttribute(): int
+    {
+        $base = $this->catalog?->price ?? 10;
+        return max(1, (int) round($base * 0.6));
     }
 }

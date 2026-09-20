@@ -32,6 +32,106 @@
   margin: 0;
   padding: 0;
 }
+/* Ключевые анимации */
+@keyframes rpgFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rpgSlideInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rpgGemGleam {
+  0%, 100% {
+    box-shadow: 0 0 4px var(--gold-dark);
+    transform: rotate(45deg) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 12px var(--gold-bright), 0 0 20px rgba(201, 168, 76, 0.6);
+    transform: rotate(45deg) scale(1.15);
+  }
+}
+
+@keyframes rpgCrestFloat {
+  0%, 100% {
+    transform: translateY(0);
+    filter: drop-shadow(0 4px 8px rgba(201, 168, 76, 0.2));
+  }
+  50% {
+    transform: translateY(-4px);
+    filter: drop-shadow(0 8px 18px rgba(201, 168, 76, 0.45));
+  }
+}
+
+@keyframes rpgIconFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes rpgPickaxeTap {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  35% {
+    transform: rotate(-14deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+  65% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes rpgBladeShine {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(201, 168, 76, 0.35));
+    transform: translateY(0);
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(235, 196, 94, 0.8));
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes rpgGoldPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(235, 196, 94, 0.45));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(255, 225, 120, 0.9));
+    transform: scale(1.06);
+  }
+}
+
+@keyframes rpgResourceRest {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(160, 184, 208, 0.25));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(190, 210, 230, 0.6));
+  }
+}
+
 /*основные стили*/
 body {
   background-color: var(--bg-deep);
@@ -59,6 +159,13 @@ body {
 .rpg-header {
   text-align: center;
   margin-bottom: 40px;
+  animation: rpgFadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.rpg-crest {
+  display: inline-block;
+  margin-bottom: 12px;
+  animation: rpgCrestFloat 4s ease-in-out infinite;
 }
 
 /*название игры в шапке*/
@@ -68,6 +175,7 @@ body {
   font-weight: 700;
   color: var(--gold-bright);
   letter-spacing: 0.08em;
+  text-shadow: 0 2px 14px rgba(201, 168, 76, 0.25);
 }
 
 /*подзаголовок под названием*/
@@ -100,6 +208,7 @@ body {
   height: 8px;
   background: var(--gold);
   transform: rotate(45deg);
+  animation: rpgGemGleam 2.8s ease-in-out infinite;
 }
 
 /*основная панель с контентом*/
@@ -110,7 +219,9 @@ body {
   width: 100%;
   max-width: 560px;
   position: relative;
-  box-shadow: 0 4px 40px #00000088;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85), 0 0 1px rgba(201, 168, 76, 0.35);
+  animation: rpgFadeInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /*заголовок внутри панели*/
@@ -158,14 +269,16 @@ body {
   padding: 12px 16px;
   outline: none;
   width: 100%;
-  transition: border-color 0.2s;
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .rpg-input::placeholder {
   color: var(--text-dim);
   font-style: italic;
 }
 .rpg-input:focus {
-  border-color: var(--gold-dark);
+  border-color: var(--gold);
+  background: #120d07;
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.25);
 }
 
 /*основная кнопка*/
@@ -180,15 +293,23 @@ body {
   background: #1a1208;
   color: var(--gold);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
   display: inline-block;
   text-align: center;
+  position: relative;
+  will-change: transform;
 }
 .rpg-btn:hover {
   border-color: var(--gold);
   color: var(--gold-bright);
-  background: #221a0a;
+  background: #24190b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65), 0 0 12px rgba(201, 168, 76, 0.3);
+}
+.rpg-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 /*кнопка на всю ширину*/
@@ -201,10 +322,17 @@ body {
   background: #100808;
   font-size: 11px;
   padding: 8px 18px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .rpg-btn-danger:hover {
   border-color: var(--red-bright);
-  color: #ff8080;
+  color: #ff9090;
+  background: #220b0b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65), 0 0 12px rgba(224, 74, 74, 0.35);
+}
+.rpg-btn-danger:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 /*прозрачная кнопка*/
@@ -214,10 +342,16 @@ body {
   background: transparent;
   font-size: 11px;
   padding: 8px 18px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .rpg-btn-ghost:hover {
-  color: var(--text-main);
-  border-color: var(--text-dim);
+  color: var(--text-bright);
+  border-color: var(--gold-dark);
+  background: rgba(201, 168, 76, 0.08);
+  transform: translateY(-1px);
+}
+.rpg-btn-ghost:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 /*навигационное меню*/
@@ -239,17 +373,30 @@ body {
   background: var(--bg-card);
   color: var(--text-main);
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   border-left: 3px solid var(--gold-dark);
+  will-change: transform;
 }
 .rpg-nav-item:hover {
   border-left-color: var(--gold);
-  background: #1a1510;
+  background: #1b1610;
   color: var(--gold-bright);
+  transform: translateX(6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), inset 3px 0 8px rgba(201, 168, 76, 0.2);
+}
+.rpg-nav-item:active {
+  transform: translateX(3px) scale(0.99);
 }
 
 /*иконка пункта меню*/
-.rpg-nav-icon { font-size: 18px; flex-shrink: 0; }
+.rpg-nav-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+.rpg-nav-item:hover .rpg-nav-icon {
+  transform: scale(1.15);
+}
 
 /*название пункта меню*/
 .rpg-nav-label {
@@ -273,8 +420,12 @@ body {
   margin-left: auto;
   color: var(--text-dim);
   font-size: 12px;
+  transition: transform 0.22s ease, color 0.22s ease;
 }
-.rpg-nav-item:hover .rpg-nav-arrow { color: var(--gold); }
+.rpg-nav-item:hover .rpg-nav-arrow {
+  color: var(--gold);
+  transform: translateX(4px);
+}
 
 /*список предметов в инвентаре*/
 .rpg-inventory {
@@ -302,12 +453,18 @@ body {
   border-left: 3px solid var(--gold-dark);
   text-decoration: none;
   color: inherit;
-  transition: all 0.2s;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   flex: 1;
+  will-change: transform;
 }
 .rpg-item-card:hover {
   border-left-color: var(--gold);
-  background: #181510;
+  background: #1c1711;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 10px rgba(201, 168, 76, 0.2);
+}
+.rpg-item-card:active {
+  transform: translateY(1px) scale(0.99);
 }
 
 /*иконка предмета слева*/
@@ -315,7 +472,71 @@ body {
   font-size: 22px;
   flex-shrink: 0;
   width: 36px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.22s ease;
+}
+.rpg-item-card:hover .rpg-item-icon {
+  transform: scale(1.15);
+}
+
+/* Обертка анимированной иконки */
+.rpg-item-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+}
+.rpg-animated-icon {
+  display: block;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+  will-change: transform, filter;
+}
+
+/* Индивидуальные стили и анимации типов предметов */
+.rpg-icon-pickaxe { color: var(--gold-bright); }
+.rpg-icon-pickaxe .rpg-animated-icon { animation: rpgPickaxeTap 3.6s ease-in-out infinite; }
+
+.rpg-icon-sword { color: var(--gold); }
+.rpg-icon-sword .rpg-animated-icon { animation: rpgBladeShine 3.2s ease-in-out infinite; }
+
+.rpg-icon-dagger { color: #a0c0d8; }
+.rpg-icon-dagger .rpg-animated-icon { animation: rpgBladeShine 2.8s ease-in-out infinite; }
+
+.rpg-icon-mace { color: #d09060; }
+.rpg-icon-mace .rpg-animated-icon { animation: rpgIconFloat 3.4s ease-in-out infinite; }
+
+.rpg-icon-axe { color: #d49868; }
+.rpg-icon-axe .rpg-animated-icon { animation: rpgPickaxeTap 3.8s ease-in-out infinite; }
+
+.rpg-icon-gold { color: #ffd866; }
+.rpg-icon-gold .rpg-animated-icon { animation: rpgGoldPulse 2.4s ease-in-out infinite; }
+
+.rpg-icon-iron { color: #a4b8c8; }
+.rpg-icon-iron .rpg-animated-icon { animation: rpgResourceRest 3.6s ease-in-out infinite; }
+
+.rpg-icon-stone { color: #9c9a92; }
+.rpg-icon-stone .rpg-animated-icon { animation: rpgResourceRest 3.8s ease-in-out infinite; }
+
+.rpg-icon-wood { color: #be9260; }
+.rpg-icon-wood .rpg-animated-icon { animation: rpgResourceRest 4s ease-in-out infinite; }
+
+.rpg-icon-shield { color: var(--gold); }
+.rpg-icon-shield .rpg-animated-icon { animation: rpgBladeShine 3.4s ease-in-out infinite; }
+
+.rpg-icon-bow { color: #c4b080; }
+.rpg-icon-bow .rpg-animated-icon { animation: rpgIconFloat 3.6s ease-in-out infinite; }
+
+.rpg-icon-default { color: var(--gold); }
+.rpg-icon-default .rpg-animated-icon { animation: rpgIconFloat 3.5s ease-in-out infinite; }
+
+/* Ховер реакция на карточках предметов и в лавке */
+.rpg-item-card:hover .rpg-animated-icon,
+.rpg-item-icon-wrap:hover .rpg-animated-icon {
+  transform: scale(1.18) rotate(-4deg);
+  filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.75));
 }
 
 /*блок с названием и описанием предмета*/
@@ -327,6 +548,7 @@ body {
   font-size: 13px;
   font-weight: 600;
   color: var(--gold);
+  transition: color 0.2s ease;
 }
 .rpg-item-card:hover .rpg-item-name { color: var(--gold-bright); }
 
@@ -385,6 +607,11 @@ body {
   background: #0d0a06;
   border: 1px solid var(--border);
   margin-bottom: 8px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.rpg-stat-row:hover {
+  border-color: var(--gold-dark);
+  background: #130f09;
 }
 .rpg-stat-label { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
 .rpg-stat-value { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--red-bright); }
@@ -399,25 +626,77 @@ body {
 .rpg-welcome-tagline { font-size: 14px; font-style: italic; color: var(--text-dim); }
 
 /*flash-сообщения об успехе или ошибке*/
-.rpg-flash { padding: 12px 20px; font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; border-left: 3px solid; width: 100%; max-width: 560px; }
+.rpg-flash {
+  padding: 12px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  border-left: 3px solid;
+  width: 100%;
+  max-width: 560px;
+  animation: rpgSlideInDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+}
 .rpg-flash-success { background: #0a1a0a; border-color: #3a8a3a; color: #80c880; }
 .rpg-flash-error   { background: #1a0a0a; border-color: var(--red); color: #c06060; }
 
 /*блок ошибок под формой*/
-.rpg-errors { background: #1a0808; border: 1px solid var(--red); padding: 12px 16px; margin-top: 12px; }
+.rpg-errors {
+  background: #1a0808;
+  border: 1px solid var(--red);
+  padding: 12px 16px;
+  margin-top: 12px;
+  animation: rpgSlideInDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 .rpg-errors p { font-size: 13px; color: #c06060; font-style: italic; }
 .rpg-errors p + p { margin-top: 4px; }
 
 /*ссылка назад*/
-.rpg-back { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; transition: color 0.2s; }
-.rpg-back:hover { color: var(--gold); }
+.rpg-back {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  transition: color 0.22s ease, transform 0.22s ease;
+}
+.rpg-back:hover {
+  color: var(--gold);
+  transform: translateX(-4px);
+}
 
 /*сетка карточек со статами*/
 .rpg-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
 
 /*одна карточка стата*/
-.rpg-stat-card { background: #0d0a06; border: 1px solid var(--border); padding: 20px 16px; text-align: center; }
-.rpg-stat-card-icon { font-size: 20px; margin-bottom: 8px; display: block; }
+.rpg-stat-card {
+  background: #0d0a06;
+  border: 1px solid var(--border);
+  padding: 20px 16px;
+  text-align: center;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+}
+.rpg-stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-dark);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 12px rgba(201, 168, 76, 0.15);
+}
+.rpg-stat-card-icon {
+  font-size: 20px;
+  margin-bottom: 8px;
+  display: block;
+  transition: transform 0.22s ease;
+}
+.rpg-stat-card:hover .rpg-stat-card-icon {
+  transform: scale(1.15);
+}
 .rpg-stat-card-value { font-family: 'Cinzel', serif; font-size: 26px; font-weight: 700; color: var(--gold-bright); display: block; }
 .rpg-stat-card-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-top: 4px; display: block; }
 
